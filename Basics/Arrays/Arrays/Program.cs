@@ -17,7 +17,7 @@ namespace Arrays
             Console.WriteLine(luckyNumbers[1]); // first index of the array
             luckyNumbers[2] = 9;
 
-            string[] friends = [9];
+            string[] friends = new string[9];
             //if not sure how many elements will fill, declaring a new element with sizing limits
 
             //dynamic array
