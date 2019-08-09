@@ -1,0 +1,15 @@
+﻿@* Using a directive to specify the model for this view *@
+@model Vidly.Models.Movie
+
+@*setting two properties
+    sets the title of the page shown in the browser to "Random"
+    setting the layout for this view as"_Layout.cshtml" meaning it will embed it within
+*@
+@{
+    ViewBag.Title = "Random";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*Using C#, Every view has a property which gives us access to a model that we pass to it on controller  *@
+<h2>@Model.Name</h2>
+
