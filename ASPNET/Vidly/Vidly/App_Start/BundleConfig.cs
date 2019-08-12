@@ -1,6 +1,7 @@
 ﻿using System.Web;
 using System.Web.Optimization;
 
+//This is where we defined various bundles from the client side app
 namespace Vidly
 {
     public class BundleConfig
@@ -23,7 +24,8 @@ namespace Vidly
                       "~/Scripts/bootstrap.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
+                      "~/Content/bootstrap-lumen.css",
+                      //changed from bootstrap.css
                       "~/Content/site.css"));
         }
     }
