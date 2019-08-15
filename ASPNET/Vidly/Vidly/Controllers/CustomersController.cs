@@ -11,6 +11,7 @@ namespace Vidly.Controllers
 {
     public class CustomersController : Controller
     {
+        // Using as mock DB
         List<Customer> customers = new List<Customer>
             {
                 new Customer {Id=1, Name = "Yoshi"},
@@ -18,6 +19,8 @@ namespace Vidly.Controllers
                 new Customer {Id=3,Name = "Mario"},
                 new Customer {Id=4,Name = "Sonic"},
             };
+
+
         // GET: Customers
         public ActionResult Index()
         {

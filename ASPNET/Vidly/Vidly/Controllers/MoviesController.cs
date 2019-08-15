@@ -10,6 +10,14 @@ namespace Vidly.Controllers
 {
     public class MoviesController : Controller
     {
+        //Using as Mock DB 
+        List<Movie> movies = new List<Movie>
+            {
+                new Movie {Id=1, Name = "Gone of the wind"},
+                new Movie {Id=2,Name = "The wind is gone"},
+                new Movie {Id=3,Name = "Gone the wind is"},
+                new Movie {Id=4,Name = "Be one with wind one will"},
+            };
         // GET: movies/Random  
         //action result is a general action, has subtypes 
         public ActionResult Random() //Default or "Index" For the action if multiple returns are involved. WE can leave the name ActionResult
@@ -49,6 +57,7 @@ namespace Vidly.Controllers
         //GET /movies
         public ActionResult Index(int? pageIndex, string sortBy)
         {
+            ViewBag.Message = "Movies List";
             //the ? next to int makes it okay to be nullable, strings are passed as reference and it is nullable 
             if (!pageIndex.HasValue)//if it doesn't have value set to 1
             {
@@ -58,10 +67,10 @@ namespace Vidly.Controllers
             {
                 sortBy = "Name";
             }
-            return Content(String.Format("pageIndex={0}&sortBy={1}", pageIndex, sortBy));
+            return View(movies);
         }
 
-        [Route("movies/released/{year:regex(\\d{4})}/{month:regex(\\d{2}):range(1, 12)}")]
+        [Route("Movies/Released/{year:regex(\\d{4})}/{month:regex(\\d{2}):range(1, 12)}")]
         public ActionResult ByReleaseDate(int year, int month) // use byte for month 
         {
             return Content($"{year}/{month}");
