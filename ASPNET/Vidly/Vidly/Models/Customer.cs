@@ -9,6 +9,11 @@ namespace Vidly.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public bool IsSubscribedToNewsletter { get; set; }
+        // navigation property --> allows navigation from customer to membership type
+        public MembershipType MembershipType { get; set; }
+        // we can look up as foreign key
+        public byte MembershipTypeId { get; set; }
         public List<Customer> GetCustomers()
         {
             List<Customer> teachers = new List<Customer>();
