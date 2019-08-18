@@ -17,20 +17,9 @@ namespace Vidly.Models
         // navigation property --> allows navigation from customer to membership type
         public MembershipType MembershipType { get; set; }
         // we can look up as foreign key
-        public byte MembershipTypeId { get; set; }
-        public List<Customer> GetCustomers()
-        {
-            List<Customer> teachers = new List<Customer>();
-            teachers.Add(new Customer { Id = 1, Name = "Yoshi" });
-            teachers.Add(new Customer { Id = 2, Name = "Ruy" });
-            teachers.Add(new Customer { Id = 3, Name = "Mario" });
-            teachers.Add(new Customer { Id = 4, Name = "Sonic" });
-            return teachers;
+        public byte MembershipTypeId { get; set; 
         }
-        public String GetName()
-        {
-            return Name;
-        }
+        
     }
 
   

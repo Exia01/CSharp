@@ -11,20 +11,13 @@ namespace Vidly.Controllers
 {
     public class CustomersController : Controller
     {
-        // Using as mock DB
-        List<Customer> customers = new List<Customer>
-            {
-                new Customer {Id=1, Name = "Yoshi"},
-                new Customer {Id=2,Name = "Ruy"},
-                new Customer {Id=3,Name = "Mario"},
-                new Customer {Id=4,Name = "Sonic"},
-            };
 
 
         // GET: Customers
         public ActionResult Index()
         {
             ViewBag.Message = "Customer List";
+            var customers = GetCustomers();
 
             return View(customers);
         }
@@ -33,11 +26,11 @@ namespace Vidly.Controllers
         public ActionResult Details(int id)
         {
             ViewBag.Message = "Customer Detail";
+            var customer = GetCustomers();
 
-            bool inList = customers.Exists(c => c.Id == id);
-            if (inList)
+            var foundCustomer = customer.FirstOrDefault(c => c.Id == id);
+            if (foundCustomer != null)
             {
-                var foundCustomer = customers.Find(c => c.Id == id);
                 return View(foundCustomer);
 
             }
@@ -46,6 +39,16 @@ namespace Vidly.Controllers
                 return HttpNotFound();
             }
 
+        }
+        // Using as mock DB
+        private IEnumerable<Customer> GetCustomers()
+        {
+            return new List<Customer> {
+                new Customer {Id=1, Name = "Yoshi"},
+                new Customer {Id=2,Name = "Ruy"},
+                new Customer {Id=3,Name = "Mario"},
+                new Customer {Id=4,Name = "Sonic"},
+            };
         }
     }
 }
