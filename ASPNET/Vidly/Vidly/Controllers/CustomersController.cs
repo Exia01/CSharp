@@ -1,34 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Dynamic;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Vidly.Models;
-using Vidly.ViewModels;
 
 namespace Vidly.Controllers
 {
     public class CustomersController : Controller
     {
-
-
+        // db context declaration
+        private ApplicationDbContext _context;
+        
+        //initializing in constructor
+        public CustomersController()
+        {
+            _context = new ApplicationDbContext(); //disposable obj
+        }
         // GET: Customers
         public ActionResult Index()
         {
             ViewBag.Message = "Customer List";
-            var customers = GetCustomers();
-
+            //including model membership type related to the customers
+            var customers = _context.customers.Include(c => c.MembershipType); //this is not querying the db --> deferred execution
+            // we can also query db by calling the _context.customers.ToList();
+            //query will take place when we iterate over the customer obj 
             return View(customers);
+        }
+
+        //helps dispose of the connection??
+        protected override void Dispose(bool disposing)
+        {
+            _context.Dispose();
         }
 
         [Route("Customers/Details/{id}")]
         public ActionResult Details(int id)
         {
             ViewBag.Message = "Customer Detail";
-            var customer = GetCustomers();
-
-            var foundCustomer = customer.FirstOrDefault(c => c.Id == id);
+            var customer = _context.customers;
+            //because of the SingleOrDefault extension method, this will query the db 
+            var foundCustomer = customer.SingleOrDefault(c => c.Id == id);
             if (foundCustomer != null)
             {
                 return View(foundCustomer);
@@ -41,14 +52,14 @@ namespace Vidly.Controllers
 
         }
         // Using as mock DB
-        private IEnumerable<Customer> GetCustomers()
-        {
-            return new List<Customer> {
-                new Customer {Id=1, Name = "Yoshi"},
-                new Customer {Id=2,Name = "Ruy"},
-                new Customer {Id=3,Name = "Mario"},
-                new Customer {Id=4,Name = "Sonic"},
-            };
-        }
+        //    private IEnumerable<Customer> GetCustomers()
+        //    {
+        //        return new List<Customer> {
+        //            new Customer {Id=1, Name = "Yoshi"},
+        //            new Customer {Id=2,Name = "Ruy"},
+        //            new Customer {Id=3,Name = "Mario"},
+        //            new Customer {Id=4,Name = "Sonic"},
+        //        };
+        //    }
     }
 }

@@ -1,0 +1,9 @@
+﻿Popular packagemanagerconsole commands 
+
+enable-migrations --> enables migrations
+
+add-migration NameofChangeHere --> Creates a migration file can also use -force to override
+
+update-database 
+
+every time a model gets updated, we can add a migration 

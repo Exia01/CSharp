@@ -158,6 +158,18 @@
     <Compile Include="Migrations\201908170013495_ApplyAnnotationsToCustomerName.Designer.cs">
       <DependentUpon>201908170013495_ApplyAnnotationsToCustomerName.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908182046191_AddNameToMembershipType.cs" />
+    <Compile Include="Migrations\201908182046191_AddNameToMembershipType.Designer.cs">
+      <DependentUpon>201908182046191_AddNameToMembershipType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908182052376_UpdateMembershipTypeNameValues.cs" />
+    <Compile Include="Migrations\201908182052376_UpdateMembershipTypeNameValues.Designer.cs">
+      <DependentUpon>201908182052376_UpdateMembershipTypeNameValues.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908182109266_UpdateMembershipTypeNameValues1.cs" />
+    <Compile Include="Migrations\201908182109266_UpdateMembershipTypeNameValues1.Designer.cs">
+      <DependentUpon>201908182109266_UpdateMembershipTypeNameValues1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -220,6 +232,7 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
+    <Content Include="HelpulCommands.txt" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -279,6 +292,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908170013495_ApplyAnnotationsToCustomerName.resx">
       <DependentUpon>201908170013495_ApplyAnnotationsToCustomerName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908182046191_AddNameToMembershipType.resx">
+      <DependentUpon>201908182046191_AddNameToMembershipType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908182052376_UpdateMembershipTypeNameValues.resx">
+      <DependentUpon>201908182052376_UpdateMembershipTypeNameValues.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908182109266_UpdateMembershipTypeNameValues1.resx">
+      <DependentUpon>201908182109266_UpdateMembershipTypeNameValues1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
