@@ -170,6 +170,18 @@
     <Compile Include="Migrations\201908182109266_UpdateMembershipTypeNameValues1.Designer.cs">
       <DependentUpon>201908182109266_UpdateMembershipTypeNameValues1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908192227244_AddNullableBirthdayToCustomer.cs" />
+    <Compile Include="Migrations\201908192227244_AddNullableBirthdayToCustomer.Designer.cs">
+      <DependentUpon>201908192227244_AddNullableBirthdayToCustomer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908192330314_AddGenreToMovie.cs" />
+    <Compile Include="Migrations\201908192330314_AddGenreToMovie.Designer.cs">
+      <DependentUpon>201908192330314_AddGenreToMovie.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908192331148_PopulateMovieGenre.cs" />
+    <Compile Include="Migrations\201908192331148_PopulateMovieGenre.Designer.cs">
+      <DependentUpon>201908192331148_PopulateMovieGenre.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -261,6 +273,7 @@
     <Content Include="Views\Customers\Index.cshtml" />
     <Content Include="Views\Customers\Details.cshtml" />
     <Content Include="Views\Movies\Index.cshtml" />
+    <Content Include="Views\Movies\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -301,6 +314,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908182109266_UpdateMembershipTypeNameValues1.resx">
       <DependentUpon>201908182109266_UpdateMembershipTypeNameValues1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908192227244_AddNullableBirthdayToCustomer.resx">
+      <DependentUpon>201908192227244_AddNullableBirthdayToCustomer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908192330314_AddGenreToMovie.resx">
+      <DependentUpon>201908192330314_AddGenreToMovie.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908192331148_PopulateMovieGenre.resx">
+      <DependentUpon>201908192331148_PopulateMovieGenre.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

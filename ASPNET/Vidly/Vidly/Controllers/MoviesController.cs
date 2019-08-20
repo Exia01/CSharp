@@ -10,14 +10,63 @@ namespace Vidly.Controllers
 {
     public class MoviesController : Controller
     {
-        //Using as Mock DB 
-        List<Movie> movies = new List<Movie>
+
+        // db context declaration
+        private ApplicationDbContext _context;
+
+        //initializing in constructor
+        public MoviesController()
+        {
+            _context = new ApplicationDbContext();
+        }
+
+
+        //GET /movies
+        public ActionResult Index(int? pageIndex, string sortBy)
+        {
+            ViewBag.Message = "Movies List";
+            //the ? next to int makes it okay to be nullable, strings are passed as reference and it is nullable 
+            if (!pageIndex.HasValue)//if it doesn't have value set to 1
             {
-                new Movie {Id=1, Name = "Gone of the wind"},
-                new Movie {Id=2,Name = "The wind is gone"},
-                new Movie {Id=3,Name = "Gone the wind is"},
-                new Movie {Id=4,Name = "Be one with wind one will"},
-            };
+                pageIndex = 1;
+            }
+            if (string.IsNullOrEmpty(sortBy)) //null or empty. 
+            {
+                sortBy = "Name";
+                var moviesSortedByName = _context.movies.OrderBy(m => m.Name);
+                return View(moviesSortedByName);
+            }
+            var movies = _context.movies;
+            return View(movies);
+        }
+
+        [Route("Movies/Details/{id}")]
+        public ActionResult Details(int id)
+        {
+            ViewBag.Message = "Movie Detail";
+            var movie = _context.movies;
+            //because of the SingleOrDefault extension method, this will query the db 
+            var foundMovie = movie.SingleOrDefault(c => c.Id == id);
+
+            if (foundMovie != null)
+            {
+                return View(foundMovie);
+
+            }
+            else
+            {
+                return HttpNotFound();
+            }
+        }
+
+
+
+        // GET: movies/edit/:id 
+        public ActionResult Edit(int id)
+        {
+            return Content($"id: {id}");
+        }
+
         // GET: movies/Random  
         //action result is a general action, has subtypes 
         public ActionResult Random() //Default or "Index" For the action if multiple returns are involved. WE can leave the name ActionResult
@@ -45,29 +94,6 @@ namespace Vidly.Controllers
             //Here we can specify the following: "NameOfAction, Controller, arguments 
             //return RedirectToAction("Index", "Home", new { page = 1, sortBy = "Name" });
             //passing anonymous object
-        }
-
-
-        // GET: movies/edit/:id 
-        public ActionResult Edit(int id)
-        {
-            return Content($"id: {id}");
-        }
-
-        //GET /movies
-        public ActionResult Index(int? pageIndex, string sortBy)
-        {
-            ViewBag.Message = "Movies List";
-            //the ? next to int makes it okay to be nullable, strings are passed as reference and it is nullable 
-            if (!pageIndex.HasValue)//if it doesn't have value set to 1
-            {
-                pageIndex = 1;
-            }
-            if (string.IsNullOrEmpty(sortBy)) //null or empty. 
-            {
-                sortBy = "Name";
-            }
-            return View(movies);
         }
 
         [Route("Movies/Released/{year:regex(\\d{4})}/{month:regex(\\d{2}):range(1, 12)}")]

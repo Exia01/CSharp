@@ -1,11 +1,11 @@
-﻿@model List<Vidly.Models.Movie>
+﻿@model IEnumerable<Vidly.Models.Movie>
 @{
     ViewBag.Title = "Movies";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h1>@ViewBag.Message</h1>
-@if (Model.Count >= 1)
+@if (Model.Count() >= 1)
 {
     <table class="table table-striped table-hover ">
         <thead>
@@ -15,16 +15,15 @@
         </thead>
         <tbody>
             <tr>
-                <td>Id</td>
                 <td>Name</td>
+                <td>Genre</td>
 
             </tr>
             @foreach (var movie in Model)
             {
                 <tr>
-
-                    <td>@movie.Id</td>
-                    <td>@Html.ActionLink(movie.Name, "Index", $"Movies/Details/{movie.Id}")</td>
+                    <td>@Html.ActionLink(movie.Name, "Details", "Movies", new { id = movie.Id }, null)</td>
+                    <td>@movie.Genre</td>
                 </tr>
             }
         </tbody>
