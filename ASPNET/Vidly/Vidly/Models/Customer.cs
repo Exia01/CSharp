@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations; // data annotations to override methods
-using System.Linq;
-using System.Web;
 
 namespace Vidly.Models
 {

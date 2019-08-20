@@ -1,5 +1,4 @@
-﻿using System.Web;
-using System.Web.Optimization;
+﻿using System.Web.Optimization;
 
 //This is where we defined various bundles from the client side app
 namespace Vidly
