@@ -12,7 +12,10 @@ namespace Vidly.Models
         //string type is nullable and there is not limit in characters numbers
         [Required]
         [StringLength(255)]
-        public string Name { get; set; } 
+        public string Name { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
+        public DateTime? Birthday { get; set; } //question marks deems it as optional
         public bool IsSubscribedToNewsletter { get; set; }
         // navigation property --> allows navigation from customer to membership type
         public MembershipType MembershipType { get; set; }

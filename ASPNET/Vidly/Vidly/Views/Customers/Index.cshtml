@@ -14,18 +14,27 @@
                 <th>Name</th>
                 <th>Membership </th>
                 <th>Discount Rate</th>
+                <th>Birthday</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var customer in Model)
             {
-                <tr>
+            <tr>
 
-                    <td>@customer.Id</td>
-                    <td>@Html.ActionLink(@customer.Name, "Details","Customers", new { id = customer.Id }, null)</td>
-                    <td>@customer.MembershipType.Name</td>
-                    <td>@customer.MembershipType.DiscountRate%</td>
-                </tr>
+                <td>@customer.Id</td>
+                <td>@Html.ActionLink(@customer.Name, "Details", "Customers", new { id = customer.Id }, null)</td>
+                <td>@customer.MembershipType.Name</td>
+                <td>@customer.MembershipType.DiscountRate%</td>
+                @if (customer.Birthday != null)
+                {
+                    <td>@String.Format("{0:d}", customer.Birthday)</td>
+                }
+                else
+                {
+                    <td>N/A</td>
+                }
+            </tr>
             }
         </tbody>
     </table>

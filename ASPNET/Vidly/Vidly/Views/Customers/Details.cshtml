@@ -8,16 +8,21 @@
 <table class="table table-striped table-hover ">
     <thead>
         <tr>
-            <th>Customers</th>
+            <td>Name</td>
+            @if (Model.Birthday != null)
+            {
+                <td>Birthday</td>
+            }
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td>Name</td>
 
-        </tr>
         <tr>
             <td>@Model.Name</td>
+            @if (Model.Birthday != null)
+            {
+                <td>@String.Format("{0:d}", Model.Birthday)</td>
+            }
 
         </tr>
     </tbody>
