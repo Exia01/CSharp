@@ -162,10 +162,6 @@
     <Compile Include="Migrations\201908182046191_AddNameToMembershipType.Designer.cs">
       <DependentUpon>201908182046191_AddNameToMembershipType.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201908182052376_UpdateMembershipTypeNameValues.cs" />
-    <Compile Include="Migrations\201908182052376_UpdateMembershipTypeNameValues.Designer.cs">
-      <DependentUpon>201908182052376_UpdateMembershipTypeNameValues.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\201908182109266_UpdateMembershipTypeNameValues1.cs" />
     <Compile Include="Migrations\201908182109266_UpdateMembershipTypeNameValues1.Designer.cs">
       <DependentUpon>201908182109266_UpdateMembershipTypeNameValues1.cs</DependentUpon>
@@ -174,16 +170,61 @@
     <Compile Include="Migrations\201908192227244_AddNullableBirthdayToCustomer.Designer.cs">
       <DependentUpon>201908192227244_AddNullableBirthdayToCustomer.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201908192330314_AddGenreToMovie.cs" />
-    <Compile Include="Migrations\201908192330314_AddGenreToMovie.Designer.cs">
-      <DependentUpon>201908192330314_AddGenreToMovie.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\201908192331148_PopulateMovieGenre.cs" />
     <Compile Include="Migrations\201908192331148_PopulateMovieGenre.Designer.cs">
       <DependentUpon>201908192331148_PopulateMovieGenre.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908200208246_PopulateGenre.cs" />
+    <Compile Include="Migrations\201908200208246_PopulateGenre.Designer.cs">
+      <DependentUpon>201908200208246_PopulateGenre.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908200336243_AddDateAddedNumInStockToMovie.cs" />
+    <Compile Include="Migrations\201908200336243_AddDateAddedNumInStockToMovie.Designer.cs">
+      <DependentUpon>201908200336243_AddDateAddedNumInStockToMovie.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908202123513_ResetMovieModel.cs" />
+    <Compile Include="Migrations\201908202123513_ResetMovieModel.Designer.cs">
+      <DependentUpon>201908202123513_ResetMovieModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908202140178_AddGenreNavigationPropertyToMovie.cs" />
+    <Compile Include="Migrations\201908202140178_AddGenreNavigationPropertyToMovie.Designer.cs">
+      <DependentUpon>201908202140178_AddGenreNavigationPropertyToMovie.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908202148400_AutoIncrementMovieProperty.cs" />
+    <Compile Include="Migrations\201908202148400_AutoIncrementMovieProperty.Designer.cs">
+      <DependentUpon>201908202148400_AutoIncrementMovieProperty.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908202149120_PopulateMovie.cs" />
+    <Compile Include="Migrations\201908202149120_PopulateMovie.Designer.cs">
+      <DependentUpon>201908202149120_PopulateMovie.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908202204564_PopulateMovie_v2.cs" />
+    <Compile Include="Migrations\201908202204564_PopulateMovie_v2.Designer.cs">
+      <DependentUpon>201908202204564_PopulateMovie_v2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908202248541_test.cs" />
+    <Compile Include="Migrations\201908202248541_test.Designer.cs">
+      <DependentUpon>201908202248541_test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908202300145_ResetMovieModel1.cs" />
+    <Compile Include="Migrations\201908202300145_ResetMovieModel1.Designer.cs">
+      <DependentUpon>201908202300145_ResetMovieModel1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908202310263_PopulateGenres.cs" />
+    <Compile Include="Migrations\201908202310263_PopulateGenres.Designer.cs">
+      <DependentUpon>201908202310263_PopulateGenres.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908202314016_PopulateMovies.cs" />
+    <Compile Include="Migrations\201908202314016_PopulateMovies.Designer.cs">
+      <DependentUpon>201908202314016_PopulateMovies.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908202343334_AddDateReleasedToMovie.cs" />
+    <Compile Include="Migrations\201908202343334_AddDateReleasedToMovie.Designer.cs">
+      <DependentUpon>201908202343334_AddDateReleasedToMovie.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\Genre.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\MembershipType.cs" />
     <Compile Include="Models\Movie.cs" />
@@ -309,20 +350,50 @@
     <EmbeddedResource Include="Migrations\201908182046191_AddNameToMembershipType.resx">
       <DependentUpon>201908182046191_AddNameToMembershipType.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201908182052376_UpdateMembershipTypeNameValues.resx">
-      <DependentUpon>201908182052376_UpdateMembershipTypeNameValues.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908182109266_UpdateMembershipTypeNameValues1.resx">
       <DependentUpon>201908182109266_UpdateMembershipTypeNameValues1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908192227244_AddNullableBirthdayToCustomer.resx">
       <DependentUpon>201908192227244_AddNullableBirthdayToCustomer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201908192330314_AddGenreToMovie.resx">
-      <DependentUpon>201908192330314_AddGenreToMovie.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908192331148_PopulateMovieGenre.resx">
       <DependentUpon>201908192331148_PopulateMovieGenre.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908200208246_PopulateGenre.resx">
+      <DependentUpon>201908200208246_PopulateGenre.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908200336243_AddDateAddedNumInStockToMovie.resx">
+      <DependentUpon>201908200336243_AddDateAddedNumInStockToMovie.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908202123513_ResetMovieModel.resx">
+      <DependentUpon>201908202123513_ResetMovieModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908202140178_AddGenreNavigationPropertyToMovie.resx">
+      <DependentUpon>201908202140178_AddGenreNavigationPropertyToMovie.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908202148400_AutoIncrementMovieProperty.resx">
+      <DependentUpon>201908202148400_AutoIncrementMovieProperty.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908202149120_PopulateMovie.resx">
+      <DependentUpon>201908202149120_PopulateMovie.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908202204564_PopulateMovie_v2.resx">
+      <DependentUpon>201908202204564_PopulateMovie_v2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908202248541_test.resx">
+      <DependentUpon>201908202248541_test.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908202300145_ResetMovieModel1.resx">
+      <DependentUpon>201908202300145_ResetMovieModel1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908202310263_PopulateGenres.resx">
+      <DependentUpon>201908202310263_PopulateGenres.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908202314016_PopulateMovies.resx">
+      <DependentUpon>201908202314016_PopulateMovies.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908202343334_AddDateReleasedToMovie.resx">
+      <DependentUpon>201908202343334_AddDateReleasedToMovie.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

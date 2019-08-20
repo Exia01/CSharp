@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 using Vidly.Models;
@@ -17,6 +18,11 @@ namespace Vidly.Controllers
         {
             _context = new ApplicationDbContext();
         }
+        //helps dispose of the connection??
+        protected override void Dispose(bool disposing)
+        {
+            _context.Dispose();
+        }
 
 
         //GET /movies
@@ -34,7 +40,7 @@ namespace Vidly.Controllers
                 var moviesSortedByName = _context.movies.OrderBy(m => m.Name);
                 return View(moviesSortedByName);
             }
-            var movies = _context.movies;
+            var movies = _context.movies.Include(m => m.Genre);
             return View(movies);
         }
 

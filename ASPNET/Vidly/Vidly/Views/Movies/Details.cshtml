@@ -9,9 +9,11 @@
 
 <h3>@Model.Name</h3>
 <ul>
-    <li>Genre: @Model.Genre</li>
-    <li>Tea</li>
-    <li>Milk</li>
+    <li>Genre: @Model.Genre.Name</li>
+    <li>Genre: @Model.DateReleased</li>
+    <li>Date Added: @Model.DateAdded.ToLongDateString()</li>
+    <li>Number in Stock : @Model.NumberInStock</li>
+
 </ul>
 
 
