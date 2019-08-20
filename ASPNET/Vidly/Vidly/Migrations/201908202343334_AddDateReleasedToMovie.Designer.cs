@@ -7,13 +7,13 @@ namespace Vidly.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class UpdateMembershipTypeNameValues : IMigrationMetadata
+    public sealed partial class AddDateReleasedToMovie : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(UpdateMembershipTypeNameValues));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddDateReleasedToMovie));
         
         string IMigrationMetadata.Id
         {
-            get { return "201908182052376_UpdateMembershipTypeNameValues"; }
+            get { return "201908202343334_AddDateReleasedToMovie"; }
         }
         
         string IMigrationMetadata.Source
