@@ -11,13 +11,16 @@ namespace Vidly.Models
         [StringLength(255)]
         public string Name { get; set; }
 
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
+        ///[Display(Name = "Date of Birth")]  // //Data annotation -> have to recompile to show difference
+        //[DataType(DataType.Date)]
         public DateTime? Birthday { get; set; } //question marks deems it as optional
+
         public bool IsSubscribedToNewsletter { get; set; }
         // navigation property --> allows navigation from customer to membership type
         public MembershipType MembershipType { get; set; }
+
         // we can look up as foreign key
+        [Display(Name ="Membership Type")]
         public byte MembershipTypeId
         {
             get; set;
