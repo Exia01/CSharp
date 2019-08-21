@@ -15,6 +15,16 @@ namespace Vidly.Controllers
         {
             _context = new ApplicationDbContext(); //disposable obj
         }
+        //helps dispose of the connection??
+        protected override void Dispose(bool disposing)
+        {
+            _context.Dispose();
+        }
+
+        public ActionResult New()
+        {
+            return View();
+        }
         // GET: Customers
         public ActionResult Index()
         {
@@ -26,11 +36,6 @@ namespace Vidly.Controllers
             return View(customers);
         }
 
-        //helps dispose of the connection??
-        protected override void Dispose(bool disposing)
-        {
-            _context.Dispose();
-        }
 
         [Route("Customers/Details/{id}")]
         public ActionResult Details(int id)
