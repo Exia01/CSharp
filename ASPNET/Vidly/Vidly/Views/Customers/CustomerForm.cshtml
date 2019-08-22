@@ -11,7 +11,8 @@
 <h2>New Customer</h2>
 @* AcionName,ControllerName, FormMethodName  *@
 @*Wrapping with using, form will be disposed and will render the closing form tag*@
-@using (Html.BeginForm("Create", "Customers"))
+
+@using (Html.BeginForm("Save", "Customers"))
 {
     <div class="form-group">
         @Html.LabelFor(m => m.Customer.Name)
@@ -19,18 +20,23 @@
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.Customer.Birthday)
-        @Html.TextBoxFor(m => m.Customer.Birthday, new { @class = "form-control" })
-    </div>
-    <div class="checkbox">
-        <label>
-            @Html.CheckBoxFor(m => m.Customer.IsSubscribedToNewsletter) Subscribe to Newsletter?
-        </label>
+        @* Using TextBoxFor overload to display date as date picker *@
+        @Html.TextBoxFor(m => m.Customer.Birthday, "{0:d MM yyyy}", new { @class = "form-control" })
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.Customer.MembershipTypeId)
         @* Using Drop down list args in selecList are: model/nameOfProperty/propertyText then adding display text *@
         @Html.DropDownListFor(m => m.Customer.MembershipTypeId, new SelectList(Model.MemberhipTypes, "Id", "Name"), "Select Membership Type ", new { @class = "form-control" })
     </div>
+    <div class="checkbox">
+        <label>
+            @Html.CheckBoxFor(m => m.Customer.IsSubscribedToNewsletter) Subscribe to Newsletter?
+        </label>
+    </div>
+    @Html.HiddenFor(m => m.Customer.Id)
     <button type="submit" class="btn btn-primary">Save</button>
     //No end form, block automatically inserts it
 }
+
+
+@*UI DatePicker: https://docs.microsoft.com/en-us/aspnet/mvc/overview/older-versions/using-the-html5-and-jquery-ui-datepicker-popup-calendar-with-aspnet-mvc/using-the-html5-and-jquery-ui-datepicker-popup-calendar-with-aspnet-mvc-part-4*@
