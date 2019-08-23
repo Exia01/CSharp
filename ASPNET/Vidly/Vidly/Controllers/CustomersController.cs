@@ -74,7 +74,7 @@ namespace Vidly.Controllers
             return RedirectToAction("Index", "Customers");
         }
 
-        [Route("Customers/Details/{id}")]
+        [Route("Customers/Movie/{id}")]
         public ActionResult Details(int id)
         {
             ViewBag.Message = "Customer Detail";

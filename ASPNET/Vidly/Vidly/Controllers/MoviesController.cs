@@ -25,41 +25,54 @@ namespace Vidly.Controllers
         }
 
 
-        //GET /movies
+
         public ActionResult Index(int? pageIndex, string sortBy)
+        //the ? next to int makes it okay to be nullable, strings are passed as reference and it is nullable 
         {
             ViewBag.Message = "Movies List";
-            //the ? next to int makes it okay to be nullable, strings are passed as reference and it is nullable 
-            if (!pageIndex.HasValue)//if it doesn't have value set to 1
+            if (!pageIndex.HasValue)
             {
                 pageIndex = 1;
             }
             if (string.IsNullOrEmpty(sortBy)) //null or empty. 
             {
                 sortBy = "Name";
-                var moviesSortedByName = _context.movies.OrderBy(m => m.Name);
+                var moviesSortedByName = _context.movies.Include(m => m.Genre);
                 return View(moviesSortedByName);
             }
             var movies = _context.movies.Include(m => m.Genre);
             return View(movies);
         }
 
-        [Route("Movies/Details/{id}")]
-        public ActionResult Details(int id)
+
+        public ActionResult New()
+        {
+            var genres = _context.genres.ToList();
+
+            //below we initialize a new view model which enables us to combine the models
+            var viewModel = new MovieGenreViewModel
+            {
+                Genres = genres,
+            };
+            return View(viewModel); //Overriding the "New" view
+        }
+
+
+
+        [Route("Movies/Movie/{id}")]
+        public ActionResult Show(int id)
         {
             ViewBag.Message = "Movie Detail";
-            var movie = _context.movies;
-            //because of the SingleOrDefault extension method, this will query the db 
-            var foundMovie = movie.SingleOrDefault(c => c.Id == id);
+            var movie = _context.movies.SingleOrDefault(m => m.Id == id);
 
-            if (foundMovie != null)
+            if (movie == null)
             {
-                return View(foundMovie);
+                return HttpNotFound();
 
             }
             else
             {
-                return HttpNotFound();
+                return View(movie);
             }
         }
 
