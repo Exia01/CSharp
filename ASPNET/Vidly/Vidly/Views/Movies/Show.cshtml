@@ -1,12 +1,12 @@
 ﻿@model Vidly.Models.Movie
+
 @{
-    ViewBag.Title = "Movie Detail";
+    ViewBag.Title = "Movie";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h1>@ViewBag.Message</h1>
 <hr/>
-
 <h3>@Model.Name</h3>
 <ul>
     <li>Genre: @Model.Genre.Name</li>
@@ -17,4 +17,7 @@
 </ul>
 
 
-
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
