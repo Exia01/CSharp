@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -10,23 +11,29 @@ namespace Vidly.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public string Name { get; set; }
 
+        [Required(ErrorMessage = "Please provide a name")]
+        public string Name { get; set; }
         public Genre Genre { get; set; }
 
 
         [Display(Name = "Number in Stock")]
-        [Range(0, 20)]
-        public int NumberInStock { get; set; }
+        [Range(1, 20)]
+        public byte NumberInStock { get; set; }
 
         [Display(Name = "Release Date")]
         //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
+       [Required]
         public DateTime DateReleased { get; set; }
 
         public DateTime DateAdded { get; set; }
 
-        [Required]
+
         [Display(Name = "Genre")]
+        [Required(ErrorMessage = "Please provide a Genre")]
         public byte GenreId { get; set; }
+
+        public static readonly byte ValidStartingStockNumber = 1;
+        public static readonly byte HighRangeStockNumber = 20;
     }
 }
