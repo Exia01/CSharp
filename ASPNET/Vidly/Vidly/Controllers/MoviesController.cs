@@ -25,7 +25,6 @@ namespace Vidly.Controllers
         }
 
 
-
         public ActionResult Index(int? pageIndex, string sortBy)
         //the ? next to int makes it okay to be nullable, strings are passed as reference and it is nullable 
         {
@@ -37,7 +36,8 @@ namespace Vidly.Controllers
             if (string.IsNullOrEmpty(sortBy)) //null or empty. 
             {
                 sortBy = "Name";
-                var moviesSortedByName = _context.movies.Include(m => m.Genre);
+
+                var moviesSortedByName = _context.movies.Include(m => m.Genre).OrderBy(m => m.Name);
                 return View(moviesSortedByName);
             }
             var movies = _context.movies.Include(m => m.Genre);
@@ -58,12 +58,20 @@ namespace Vidly.Controllers
         }
 
 
+        [HttpPost]
+        public ActionResult Create(MovieGenreViewModel viewModel)
+        {
+            viewModel.Movie.DateAdded = System.DateTime.Now;
+            _context.movies.Add(viewModel.Movie);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
 
         [Route("Movies/Movie/{id}")]
         public ActionResult Show(int id)
         {
             ViewBag.Message = "Movie Detail";
-            var movie = _context.movies.SingleOrDefault(m => m.Id == id);
+            var movie = _context.movies.Include(m => m.Genre).SingleOrDefault(m => m.Id == id);
 
             if (movie == null)
             {
@@ -72,17 +80,52 @@ namespace Vidly.Controllers
             }
             else
             {
+
                 return View(movie);
             }
         }
 
-
-
-        // GET: movies/edit/:id 
+        //[Route("Movies/Movie/{id}")] //try to fix to movies/id/edit instead
         public ActionResult Edit(int id)
         {
-            return Content($"id: {id}");
+            ViewBag.Message = "Edit Movie";
+            var movie = _context.movies.SingleOrDefault(c => c.Id == id);
+            if (movie == null)
+            {
+                return HttpNotFound();
+
+            }
+            else
+            {
+                var viewmodel = new MovieGenreViewModel
+                {
+                    Movie = movie,
+                    Genres = _context.genres.ToList(),
+
+                };
+                return View(viewmodel);
+            }
+
         }
+
+        [HttpPut]
+        [Route("Movies/Movie/{id}")]
+        public ActionResult Update(MovieGenreViewModel viewModel)
+        {
+         
+                var movie = viewModel.Movie;
+                var foundMovie = _context.movies.Single(m => m.Id == movie.Id);
+                //can also use auto mapper, convention name tool
+                foundMovie.Name = movie.Name;
+                foundMovie.DateReleased = movie.DateReleased;
+                foundMovie.NumberInStock = movie.NumberInStock;
+                foundMovie.GenreId = movie.GenreId;
+            
+            _context.SaveChanges();
+            return RedirectToAction("Index", "Movies");
+        }
+
+
 
         // GET: movies/Random  
         //action result is a general action, has subtypes 

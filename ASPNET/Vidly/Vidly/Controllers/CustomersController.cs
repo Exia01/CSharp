@@ -36,12 +36,14 @@ namespace Vidly.Controllers
 
         public ActionResult New()
         {
+
             var membershipTypes = _context.membershipTypes.ToList();
             ViewBag.Action = "Create";
 
             //below we initialize a new view model which enables us to combine the models
             var viewModel = new CustomerFormViewModel
             {
+                Customer = new Customer(), //this will initialize the customers properties
                 MemberhipTypes = membershipTypes,
             };
             return View("CustomerForm",viewModel); //Overriding the "New" view
@@ -50,7 +52,17 @@ namespace Vidly.Controllers
         [HttpPost] //annotation --> can only be called only using POST method
         public ActionResult Save(CustomerFormViewModel viewModel) //model binding --> mvc framework will automatically bind the model to the req data
         {
-            if(viewModel.Customer.Id == 0 || viewModel.Customer.Id == null)
+            if (!ModelState.IsValid)//checking if the property of the model passed are valid
+            {
+                //if not valid
+                var pendingUserModel = new CustomerFormViewModel
+                {
+                    Customer = viewModel.Customer, //using the values passed 
+                    MemberhipTypes = _context.membershipTypes.ToList()
+                };
+                return View("CustomerForm", pendingUserModel);
+            }
+            if(viewModel.Customer.Id == 0)
             {
 
             _context.customers.Add(viewModel.Customer); //can also just pass customer as the parameter
