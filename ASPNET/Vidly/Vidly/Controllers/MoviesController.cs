@@ -50,7 +50,7 @@ namespace Vidly.Controllers
             var genres = _context.genres.ToList();
 
             //below we initialize a new view model which enables us to combine the models
-            var viewModel = new MovieGenreViewModel
+            var viewModel = new MovieGenreViewModel()
             {
                 Genres = genres,
             };
@@ -58,11 +58,22 @@ namespace Vidly.Controllers
         }
 
 
+        [ValidateAntiForgeryToken]
         [HttpPost]
-        public ActionResult Create(MovieGenreViewModel viewModel)
+        public ActionResult Create(Movie movie)
         {
-            viewModel.Movie.DateAdded = System.DateTime.Now;
-            _context.movies.Add(viewModel.Movie);
+          
+            if (!ModelState.IsValid)
+            {
+                var pendingMovieModel = new MovieGenreViewModel(movie)
+                {
+
+                    Genres = _context.genres.ToList()
+                };
+                return View("New", pendingMovieModel);
+            }
+            movie.DateAdded = System.DateTime.Now;
+            _context.movies.Add(movie);
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -97,9 +108,9 @@ namespace Vidly.Controllers
             }
             else
             {
-                var viewmodel = new MovieGenreViewModel
+                var viewmodel = new MovieGenreViewModel(movie) //passing movie to constructor
                 {
-                    Movie = movie,
+
                     Genres = _context.genres.ToList(),
 
                 };
@@ -110,17 +121,24 @@ namespace Vidly.Controllers
 
         [HttpPut]
         [Route("Movies/Movie/{id}")]
-        public ActionResult Update(MovieGenreViewModel viewModel)
+        public ActionResult Update(Movie movie)
         {
-         
-                var movie = viewModel.Movie;
-                var foundMovie = _context.movies.Single(m => m.Id == movie.Id);
-                //can also use auto mapper, convention name tool
-                foundMovie.Name = movie.Name;
-                foundMovie.DateReleased = movie.DateReleased;
-                foundMovie.NumberInStock = movie.NumberInStock;
-                foundMovie.GenreId = movie.GenreId;
-            
+            var foundMovie = _context.movies.Single(m => m.Id == movie.Id);
+            if (!ModelState.IsValid)
+            {
+                var pendingMovieModel = new MovieGenreViewModel(foundMovie)
+                {
+
+                    Genres = _context.genres.ToList()
+                };
+                return View("Edit", pendingMovieModel);
+            }
+            //can also use auto mapper, convention name tool
+            foundMovie.Name = movie.Name;
+            foundMovie.DateReleased = movie.DateReleased;
+            foundMovie.NumberInStock = movie.NumberInStock;
+            foundMovie.GenreId = movie.GenreId;
+
             _context.SaveChanges();
             return RedirectToAction("Index", "Movies");
         }

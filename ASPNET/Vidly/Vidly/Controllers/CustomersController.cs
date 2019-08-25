@@ -49,6 +49,7 @@ namespace Vidly.Controllers
             return View("CustomerForm",viewModel); //Overriding the "New" view
         }
 
+        [ValidateAntiForgeryToken]
         [HttpPost] //annotation --> can only be called only using POST method
         public ActionResult Save(CustomerFormViewModel viewModel) //model binding --> mvc framework will automatically bind the model to the req data
         {
