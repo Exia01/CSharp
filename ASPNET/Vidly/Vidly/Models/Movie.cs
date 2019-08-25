@@ -12,14 +12,20 @@ namespace Vidly.Models
         public int Id { get; set; }
         public string Name { get; set; }
 
+        public Genre Genre { get; set; }
+
+
+        [Display(Name = "Number in Stock")]
         [Range(0, 20)]
         public int NumberInStock { get; set; }
+
+        [Display(Name = "Release Date")]
+        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime DateReleased { get; set; }
+
         public DateTime DateAdded { get; set; }
 
-        //[Required]
-        public virtual Genre Genre { get; set; }
-
+        [Required]
         [Display(Name = "Genre")]
         public byte GenreId { get; set; }
     }

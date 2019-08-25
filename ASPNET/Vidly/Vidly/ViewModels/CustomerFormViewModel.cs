@@ -11,6 +11,6 @@ namespace Vidly.ViewModels
     {   // since no functionality is needed from list IEnumerable enables looping
         public IEnumerable<MembershipType> MemberhipTypes { get; set; }
         public Customer Customer { get; set; }
-        public MembershipType MembershipType { get; set; }
+        //public MembershipType MembershipType { get; set; } // //Don't think this is needed. Not sure how it ended here. 
     }
 }
