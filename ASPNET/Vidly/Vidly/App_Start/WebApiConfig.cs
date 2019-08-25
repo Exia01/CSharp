@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Net.Http.Headers;
 using System.Web.Http;
+using Vidly.App_Start;
 
 namespace Vidly
 {
@@ -9,6 +8,8 @@ namespace Vidly
     {
         public static void Register(HttpConfiguration config)
         {
+
+            config.Formatters.Add(new BrowserJsonFormatter());
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
@@ -19,3 +20,5 @@ namespace Vidly
         }
     }
 }
+
+//Setting up JSON Response: https://stackoverflow.com/questions/9847564/how-do-i-get-asp-net-web-api-to-return-json-instead-of-xml-using-chrome/13277616#13277616

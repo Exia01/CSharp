@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -13,14 +9,14 @@ using Vidly.Models;
 
 namespace Vidly.Controllers.Api
 {
-    public class CustomersController : ApiController
+    public class CustomersController : ApiController //derives from api controller not controller 
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: api/Customers
-        public IQueryable<Customer> Getcustomers()
+        public IQueryable<Customer> Getcustomers() //enumerable?
         {
-            return db.customers;
+            return db.customers; // can also do ToList()
         }
 
         // GET: api/Customers/5
@@ -31,13 +27,16 @@ namespace Vidly.Controllers.Api
             if (customer == null)
             {
                 return NotFound();
+                // Can also use 
+                //throw new HttpResponseException(HttpStatusCode.NotFound);
             }
 
             return Ok(customer);
+            //Can also just return customer?
         }
 
         // PUT: api/Customers/5
-        [ResponseType(typeof(void))]
+        [ResponseType(typeof(Customer))]
         public async Task<IHttpActionResult> PutCustomer(int id, Customer customer)
         {
             if (!ModelState.IsValid)
@@ -68,12 +67,13 @@ namespace Vidly.Controllers.Api
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return Ok(customer);
         }
 
         // POST: api/Customers
+        [HttpPost]
         [ResponseType(typeof(Customer))]
-        public async Task<IHttpActionResult> PostCustomer(Customer customer)
+        public async Task<IHttpActionResult> CreateCustomer(Customer customer)//Can also name PostCustomer and remove annotation
         {
             if (!ModelState.IsValid)
             {
@@ -102,6 +102,8 @@ namespace Vidly.Controllers.Api
             return Ok(customer);
         }
 
+
+        //end connection to db
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -111,6 +113,7 @@ namespace Vidly.Controllers.Api
             base.Dispose(disposing);
         }
 
+        //method
         private bool CustomerExists(int id)
         {
             return db.customers.Count(e => e.Id == id) > 0;
