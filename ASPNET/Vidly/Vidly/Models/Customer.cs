@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations; // data annotations to override methods
 
 namespace Vidly.Models
