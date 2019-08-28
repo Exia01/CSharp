@@ -16,17 +16,17 @@ namespace Vidly.Controllers.Api
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: api/Customers
-        public IQueryable<CustomerDto> Getcustomers() //enumerable?
+        public IQueryable<Dtos.Customer> Getcustomers() //enumerable?
         {
             // mapping customer obj to customer dto, using a delegate mapper.map this will return the customer DTO??
-            return db.customers.Select(Mapper.Map<Customer, CustomerDto>).AsQueryable(); // can also do ToList()
+            return db.customers.Select(Mapper.Map<Models.Customer, Dtos.Customer>).AsQueryable(); // can also do ToList()
         }
 
         // GET: api/Customers/5
-        [ResponseType(typeof(CustomerDto))]
+        [ResponseType(typeof(Dtos.Customer))]
         public async Task<IHttpActionResult> GetCustomer(int id)
         {
-            Customer customer = await db.customers.FindAsync(id);
+            Models.Customer customer = await db.customers.FindAsync(id);
             if (customer == null)
             {
                 return NotFound();
@@ -34,29 +34,29 @@ namespace Vidly.Controllers.Api
                 //throw new HttpResponseException(HttpStatusCode.NotFound);
             }
             //Can't use the select method of linq so instead we pass the customer obj as an argument? 
-            return Ok(Mapper.Map<Customer, CustomerDto>(customer));
+            return Ok(Mapper.Map<Models.Customer, Dtos.Customer>(customer));
             //Can also just return customer?
         }
 
         // PUT: api/Customers/5
-        [ResponseType(typeof(CustomerDto))] //Responding with DTO instead of customer
-        public async Task<IHttpActionResult> PutCustomer(int id, CustomerDto customerDto)
+        [ResponseType(typeof(Models.Customer))] //Responding with DTO instead of customer
+        public async Task<IHttpActionResult> PutCustomer(int id, Models.Customer customer)
         {
-
-            var customerInDB = db.customers.SingleOrDefault(c => c.Id == id);
-            //mapping the customer to the DTO to check changes
-            Mapper.Map(customerDto, customerInDB); // no declaration passed. Inferred by argumments 
-            db.Entry(customerInDB).State = EntityState.Modified;
 
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != customerDto.Id) //here be dragons
+            if (id != customer.Id) //here be dragons
             {
                 return BadRequest();
             }
+
+            //mapping the customer to the DTO to check changes
+            var foundCustomer = db.customers.SingleOrDefault(c => c.Id == id);
+            //Mapper.Map(CustomerDto, customerInDB); // no declaration passed. Inferred by argumments 
+            db.Entry(foundCustomer).State = EntityState.Modified;
             try
             {
                 await db.SaveChangesAsync();
@@ -73,31 +73,34 @@ namespace Vidly.Controllers.Api
                 }
             }
 
-            return Ok(customerDto);
+            return Ok(foundCustomer);
         }
 
         // POST: api/Customers
         [HttpPost]
-        [ResponseType(typeof(CustomerDto))]
-        public async Task<IHttpActionResult> CreateCustomer(CustomerDto customerDto)//Can also name PostCustomer and remove annotation
+        [ResponseType(typeof(Models.Customer))]
+        public async Task<IHttpActionResult> CreateCustomer(Models.Customer customer)//Can also name PostCustomer and remove annotation
         {
+            //var customer = Mapper.Map<Dtos.Customer, Models.Customer>(customerDto); //mapping the CustomerDto to Customer
+
+            db.customers.Add(customer);
+            
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return BadRequest(ModelState);// returns error with message
             }
-            var customer = Mapper.Map<CustomerDto, Customer>(customerDto); //mapping the CustomerDto to Customer
-            db.customers.Add(customer);
             await db.SaveChangesAsync();
 
             //Not sure if the Id returned should be the Dto or regular Customer
-            return CreatedAtRoute("DefaultApi", new { id = customerDto.Id }, customerDto);
+            return CreatedAtRoute("DefaultApi", new { id = customer.Id }, customer);
         }
 
         // DELETE: api/Customers/5
-        [ResponseType(typeof(Customer))]
+        [ResponseType(typeof(Models.Customer))]
         public async Task<IHttpActionResult> DeleteCustomer(int id)
         {
-            Customer customer = await db.customers.FindAsync(id);
+
+            Models.Customer customer = await db.customers.FindAsync(id);
             if (customer == null)
             {
                 return NotFound();

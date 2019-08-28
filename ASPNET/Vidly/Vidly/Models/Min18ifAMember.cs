@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
+
 namespace Vidly.Models
 {
     public class Min18ifAMember : ValidationAttribute //deriving class from validation attributes
@@ -8,7 +9,7 @@ namespace Vidly.Models
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             //gives us access to the containing class --> in this case Customer
-            var customer = (Customer)validationContext.ObjectInstance; //because it is obj, cast to cstmr
+            var customer = (Models.Customer)validationContext.ObjectInstance; //because it is obj, cast to cstmr
             if (customer.MembershipTypeId == MembershipType.Unknown ||
                 customer.MembershipTypeId == MembershipType.PayAsYouGo)
             {  //if pay as you go  or if no membership selected. 
