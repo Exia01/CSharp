@@ -1,6 +1,6 @@
 ﻿using System.Web.Http;
 using Vidly.App_Start;
-
+using Newtonsoft.Json.Serialization;
 namespace Vidly
 {
     public static class WebApiConfig
@@ -8,12 +8,15 @@ namespace Vidly
         public static void Register(HttpConfiguration config)
         {
 
-            config.Formatters.Add(new BrowserJsonFormatter());
+            //config.Formatters.Add(new BrowserJsonFormatter());
+            var settings = config.Formatters.JsonFormatter.SerializerSettings; //initializing settings
+            settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            settings.Formatting = Newtonsoft.Json.Formatting.Indented;
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
+                routeTemplate: "api/{controller}/{id}", //no action
                 defaults: new { id = RouteParameter.Optional }
             );
         }
