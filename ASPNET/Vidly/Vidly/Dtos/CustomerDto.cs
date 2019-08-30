@@ -17,8 +17,8 @@ namespace Vidly.Dtos
 
         public bool IsSubscribedToNewsletter { get; set; }
 
-        //Domain class can be excluded because it is created a dependency from our dto to domain model
-        //public MembershipType MembershipType { get; set; 
+        //brings ins the membership attributes. Bare minimum
+        public MemebershipTypeDto MembershipType { get; set; }
 
         [Required(ErrorMessage = "Please select a membership")]
         public byte MembershipTypeId //because it is byte and empty field passes a string throws error

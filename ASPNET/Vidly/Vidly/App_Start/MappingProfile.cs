@@ -9,9 +9,12 @@ namespace Vidly.App_Start
 
         public MappingProfile()
         {
+
+            //Domain to DTO
             Mapper.CreateMap<Models.Customer, Dtos.Customer>();
             Mapper.CreateMap<Dtos.Customer, Models.Customer>();
-            // Use CreateMap... Etc.. here (Profile methods are the same as configuration methods)
+            Mapper.CreateMap<MembershipType, MemebershipTypeDto>();
+        
         }
 
     }

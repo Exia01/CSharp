@@ -10,7 +10,7 @@ using Vidly.Models;
 
 namespace Vidly.Controllers.Api
 {
-   
+
     public class CustomersController : ApiController //derives from api controller not controller 
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -19,7 +19,12 @@ namespace Vidly.Controllers.Api
         public IQueryable<Dtos.Customer> Getcustomers() //enumerable?
         {
             // mapping customer obj to customer dto, using a delegate mapper.map this will return the customer DTO??
-            return db.customers.Select(Mapper.Map<Models.Customer, Dtos.Customer>).AsQueryable(); // can also do ToList()
+            //select performs an operation => "mapper on each customer"
+            var customersQuery = db.customers
+                 .Include(c => c.MembershipType)
+                 .Select(Mapper.Map<Models.Customer, Dtos.Customer>)
+                 .AsQueryable(); // can also do ToList()
+            return customersQuery;
         }
 
         // GET: api/Customers/5
@@ -84,7 +89,7 @@ namespace Vidly.Controllers.Api
             //var customer = Mapper.Map<Dtos.Customer, Models.Customer>(customerDto); //mapping the CustomerDto to Customer
 
             db.customers.Add(customer);
-            
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);// returns error with message

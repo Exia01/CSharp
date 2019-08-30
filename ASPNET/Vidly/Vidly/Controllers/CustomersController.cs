@@ -25,12 +25,12 @@ namespace Vidly.Controllers
         // GET: Customers
         public ActionResult Index()
         {
-            ViewBag.Message = "Customer List";
-            //including model membership type related to the customers
-            var customers = _context.customers.Include(c => c.MembershipType); //this is not querying the db --> deferred execution
-            // we can also query db by calling the _context.customers.ToList();
-            //query will take place when we iterate over the customer obj 
-            return View(customers);
+            //ViewBag.Message = "Customer List";
+            ////including model membership type related to the customers
+            //var customers = _context.customers.Include(c => c.MembershipType); //this is not querying the db --> deferred execution
+            //// we can also query db by calling the _context.customers.ToList();
+            ////query will take place when we iterate over the customer obj 
+            return View();
         }
 
 
