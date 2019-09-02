@@ -11,6 +11,7 @@ namespace Vidly
             //this filter redirects the user to an error page when the actions throws an exception
             filters.Add(new HandleErrorAttribute());
             filters.Add(new AuthorizeAttribute());
+            filters.Add(new RequireHttpsAttribute());
         }
     }
 }

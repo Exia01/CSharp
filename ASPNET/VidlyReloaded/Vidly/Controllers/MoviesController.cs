@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web.Mvc;
 using Vidly.Models;
 using Vidly.ViewModels;
+using VidlyReloaded.Models;
 
 namespace Vidly.Controllers
 {
@@ -24,9 +25,12 @@ namespace Vidly.Controllers
 
         public ViewResult Index()
         {
-            return View();    
+            if(User.IsInRole(RoleName.CanManageMovies))//if user is logged in, check for the role
+                return View();
+            
+            return View("ReadOnlyList"); //since single check can skip the reg format
         }
-
+        [Authorize(Roles = RoleName.CanManageMovies)] //this overrides the global settings 
         public ViewResult New()
         {
             var genres = _context.Genres.ToList();
