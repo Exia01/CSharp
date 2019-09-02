@@ -6,6 +6,8 @@ using System.Web.Mvc;
 
 namespace Vidly.Controllers
 {
+
+    [AllowAnonymous] //this will enable access to everyone regardless of status
     public class HomeController : Controller
     {
         public ActionResult Index()

@@ -1,91 +1,140 @@
 ﻿using AutoMapper;
-using System;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Description;
 using Vidly.Dtos;
 using Vidly.Models;
 
 namespace Vidly.Controllers.Api
 {
-    public class CustomersController : ApiController
+
+    public class CustomersController : ApiController //derives from api controller not controller 
     {
-        private ApplicationDbContext _context;
+        private ApplicationDbContext db = new ApplicationDbContext();
 
-        public CustomersController()
+        // GET: api/Customers
+        public IQueryable<CustomerDto> Getcustomers() //enumerable?
         {
-            _context = new ApplicationDbContext();
+            // mapping customer obj to customer dto, using a delegate mapper.map this will return the customer DTO??
+            //select performs an operation => "mapper on each customer"
+            var customersQuery = db.Customers
+                 .Include(c => c.MembershipType)
+                 .Select(Mapper.Map<Models.Customer, CustomerDto>)
+                 .AsQueryable(); // can also do ToList()
+            return customersQuery;
         }
 
-        // GET /api/customers
-        public IHttpActionResult GetCustomers()
+        // GET: api/Customers/5
+        [ResponseType(typeof(CustomerDto))]
+        public async Task<IHttpActionResult> GetCustomer(int id)
         {
-            var customerDtos = _context.Customers
-                .Include(c => c.MembershipType)
-                .ToList()
-                .Select(Mapper.Map<Customer, CustomerDto>);
-            
-            return Ok(customerDtos);    
-        }
-
-        // GET /api/customers/1
-        public IHttpActionResult GetCustomer(int id)
-        {
-            var customer = _context.Customers.SingleOrDefault(c => c.Id == id);
-
+            Models.Customer customer = await db.Customers.FindAsync(id);
             if (customer == null)
+            {
                 return NotFound();
-
-            return Ok(Mapper.Map<Customer, CustomerDto>(customer));
+                // Can also use 
+                //throw new HttpResponseException(HttpStatusCode.NotFound);
+            }
+            //Can't use the select method of linq so instead we pass the customer obj as an argument? 
+            return Ok(Mapper.Map<Models.Customer, CustomerDto>(customer));
+            //Can also just return customer?
         }
 
-        // POST /api/customers
+        // PUT: api/Customers/5
+        [ResponseType(typeof(Models.Customer))] //Responding with DTO instead of customer
+        public async Task<IHttpActionResult> PutCustomer(int id, Models.Customer customer)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (id != customer.Id) //here be dragons
+            {
+                return BadRequest();
+            }
+
+            //mapping the customer to the DTO to check changes
+            var foundCustomer = db.Customers.SingleOrDefault(c => c.Id == id);
+            //Mapper.Map(CustomerDto, customerInDB); // no declaration passed. Inferred by argumments 
+            db.Entry(foundCustomer).State = EntityState.Modified;
+            try
+            {
+                await db.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!CustomerExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return Ok(foundCustomer);
+        }
+
+        // POST: api/Customers
         [HttpPost]
-        public IHttpActionResult CreateCustomer(CustomerDto customerDto)
+        [ResponseType(typeof(Models.Customer))]
+        public async Task<IHttpActionResult> CreateCustomer(Models.Customer customer)//Can also name PostCustomer and remove annotation
         {
+            //var customer = Mapper.Map<Dtos.Customer, Models.Customer>(customerDto); //mapping the CustomerDto to Customer
+
+            db.Customers.Add(customer);
+
             if (!ModelState.IsValid)
-                return BadRequest();
+            {
+                return BadRequest(ModelState);// returns error with message
+            }
+            await db.SaveChangesAsync();
 
-            var customer = Mapper.Map<CustomerDto, Customer>(customerDto);
-            _context.Customers.Add(customer);
-            _context.SaveChanges();
-
-            customerDto.Id = customer.Id;
-            return Created(new Uri(Request.RequestUri + "/" + customer.Id), customerDto);
+            //Not sure if the Id returned should be the Dto or regular Customer
+            return CreatedAtRoute("DefaultApi", new { id = customer.Id }, customer);
         }
 
-        // PUT /api/customers/1
-        [HttpPut]
-        public IHttpActionResult UpdateCustomer(int id, CustomerDto customerDto)
+        // DELETE: api/Customers/5
+        [ResponseType(typeof(Models.Customer))]
+        public async Task<IHttpActionResult> DeleteCustomer(int id)
         {
-            if (!ModelState.IsValid)
-                return BadRequest();
 
-            var customerInDb = _context.Customers.SingleOrDefault(c => c.Id == id);
-
-            if (customerInDb == null)
+            Models.Customer customer = await db.Customers.FindAsync(id);
+            if (customer == null)
+            {
                 return NotFound();
+            }
 
-            Mapper.Map(customerDto, customerInDb);
+            db.Customers.Remove(customer);
+            await db.SaveChangesAsync();
 
-            _context.SaveChanges();
-
-            return Ok();
+            return Ok(customer);
         }
 
-        // DELETE /api/customers/1
-        [HttpDelete]
-        public IHttpActionResult DeleteCustomer(int id)
+
+        //end connection to db
+        protected override void Dispose(bool disposing)
         {
-            var customerInDb = _context.Customers.SingleOrDefault(c => c.Id == id);
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
 
-            if (customerInDb == null)
-                return NotFound();
-
-            _context.Customers.Remove(customerInDb);
-            _context.SaveChanges();
-
-            return Ok();
+        //method
+        private bool CustomerExists(int id)
+        {
+            return db.Customers.Count(e => e.Id == id) > 0;
         }
     }
 }
+
+
+//https://stackoverflow.com/questions/2433306/whats-the-difference-between-iqueryable-and-ienumerable?rq=1

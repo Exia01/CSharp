@@ -286,10 +286,6 @@
     <Compile Include="Migrations\201908251800387_UpdateMoviGenreModel.Designer.cs">
       <DependentUpon>201908251800387_UpdateMoviGenreModel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201908300127187_Test.cs" />
-    <Compile Include="Migrations\201908300127187_Test.Designer.cs">
-      <DependentUpon>201908300127187_Test.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Genre.cs" />
@@ -655,9 +651,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908251800387_UpdateMoviGenreModel.resx">
       <DependentUpon>201908251800387_UpdateMoviGenreModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201908300127187_Test.resx">
-      <DependentUpon>201908300127187_Test.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
