@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 
 namespace Vidly.Controllers
 {
@@ -10,6 +11,7 @@ namespace Vidly.Controllers
     [AllowAnonymous] //this will enable access to everyone regardless of status
     public class HomeController : Controller
     {
+        [OutputCache(Duration = 50, Location = OutputCacheLocation.Server, VaryByParam ="*")]// caches the page, faster rendering set to 50secs
         public ActionResult Index()
         {
             return View();

@@ -3,6 +3,8 @@ using System.Linq;
 using System.Web.Mvc;
 using Vidly.Models;
 using Vidly.ViewModels;
+using System.Runtime.Caching;
+using System.Collections.Generic;
 
 namespace Vidly.Controllers
 {
@@ -65,6 +67,14 @@ namespace Vidly.Controllers
 
         public ViewResult Index()
         {
+
+            if (MemoryCache.Default["Genres"]==null) //this will store/create a dictionary 
+            {
+                MemoryCache.Default["Genres"] = _context.Genres.ToList();
+
+            }
+            //returns an object and converting to IEnumerable
+            var genres = MemoryCache.Default["Genres"] as IEnumerable<Genre>;
             return View();
         }
 
